@@ -31,23 +31,67 @@ button.addEventListener("click", async () => {
     const value = input.value;
     const result = await getData(value);
     console.log(result)
-    cityname.innerText = `${result.location.name}, ${result.location.country}`
-    tempc.innerText = `${result.current.temp_c}°C`;
-    conditiontext.innerText = `${result.current.condition.text}`;
-    feekslike.innerText = `${result.current.feelslike_c}°C`;
-    humidity.innerText = `${result.current.humidity}`
-    // conditionicon.src = `https:${result.current.condition.icon}`;
-    localtime.innerText = `${result.location.localtime}`;
-    windkph.innerText = `${result.current.wind_kph} kph`;   
-    winddirection.innerText = `${result.current.wind_dir}`;
-    pressuremb.innerText = `${result.current.pressure_mb} mb`;
-    pressiptionmm.innerText = `${result.current.precip_mm} mm`;
-    lastupdated.innerText = `Last Updated: ${result.current.last_updated}`;
-    visibility.innerText = `${result.current.vis_km} km`;
-    uv.innerText = `${result.current.uv}`;
-    cloud.innerText = `${result.current.cloud} %`;
-    dewpoint.innerText = `${result.current.dewpoint_c} °C`;
 
-    //set bg image based on weather condition
-    // weathercard.style.backgroundImage = `url('https:${result.current.condition.icon}')`;
-})
+    const weatherData = {
+        cityName: `${result.location.name}, ${result.location.country}`,
+        tempC: result.current.temp_c,
+        conditionText: result.current.condition.text,
+        feelsLike: result.current.feelslike_c,
+        humidity: result.current.humidity,
+        localTime: result.location.localtime,
+        windKph: result.current.wind_kph,
+        windDir: result.current.wind_dir,
+        pressureMb: result.current.pressure_mb,
+        precipMm: result.current.precip_mm,
+        lastUpdated: result.current.last_updated,
+        visibility: result.current.vis_km,
+        uv: result.current.uv,
+        cloud: result.current.cloud,
+        dewpoint: result.current.dewpoint_c,
+        timestamp: Date.now() // Store when data was saved
+    };
+
+    localStorage.setItem("weatherData", JSON.stringify(weatherData));
+
+    cityname.innerText = weatherData.cityName;
+    tempc.innerText = `${weatherData.tempC}°C`;
+    conditiontext.innerText = weatherData.conditionText;
+    feekslike.innerText = `${weatherData.feelsLike}°C`;
+    humidity.innerText = `${weatherData.humidity}`;
+    localtime.innerText = weatherData.localTime;
+    windkph.innerText = `${weatherData.windKph} kph`;   
+    winddirection.innerText = weatherData.windDir;
+    pressuremb.innerText = `${weatherData.pressureMb} mb`;
+    pressiptionmm.innerText = `${weatherData.precipMm} mm`;
+    lastupdated.innerText = `Last Updated: ${weatherData.lastUpdated}`;
+    visibility.innerText = `${weatherData.visibility} km`;
+    uv.innerText = `${weatherData.uv}`;
+    cloud.innerText = `${weatherData.cloud} %`;
+    dewpoint.innerText = `${weatherData.dewpoint} °C`;
+    
+});
+
+window.addEventListener('load', () => {
+    const savedData = localStorage.getItem('weatherData');
+    
+    if (savedData) {
+        const weatherData = JSON.parse(savedData);
+        
+        // Populate UI with saved data
+        cityname.innerText = weatherData.cityName;
+        tempc.innerText = `${weatherData.tempC}°C`;
+        conditiontext.innerText = weatherData.conditionText;
+        feekslike.innerText = `${weatherData.feelsLike}°C`;
+        humidity.innerText = `${weatherData.humidity}`;
+        localtime.innerText = weatherData.localTime;
+        windkph.innerText = `${weatherData.windKph} kph`;
+        winddirection.innerText = weatherData.windDir;
+        pressuremb.innerText = `${weatherData.pressureMb} mb`;
+        pressiptionmm.innerText = `${weatherData.precipMm} mm`;
+        lastupdated.innerText = `Last Updated: ${weatherData.lastUpdated}`;
+        visibility.innerText = `${weatherData.visibility} km`;
+        uv.innerText = `${weatherData.uv}`;
+        cloud.innerText = `${weatherData.cloud} %`;
+        dewpoint.innerText = `${weatherData.dewpoint} °C`;
+    }
+});
