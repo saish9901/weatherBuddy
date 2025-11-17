@@ -4,8 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>weatherBuddy - One stop for weather updates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    
+
+    <nav class="w-full min-h-[70px] bg-gradient-to-r from-slate-900 to-slate-800 flex justify-center items-center py-8 shadow-lg">
+        <h2 class="text-4xl font-thin tracking-wide">weather<span class="font-medium">Buddy</span></h2>
+    </nav>
+
+    <main class="container mx-auto px-4 py-12 pb-40">
+        <div class="search-container max-w-2xl mx-auto mb-12">
+            <div class="flex gap-3 items-center backdrop-blur-sm bg-white/10 p-6 rounded-2xl shadow-2xl border border-white/20">
+                <input 
+                    type="text" 
+                    id="city-input" 
+                    placeholder="Enter city name..."
+                    class="flex-1 bg-white/20 border border-white/30 rounded-xl px-6 py-4 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
+                >
+                <button 
+                    type="submit" 
+                    id="search-btn"
+                    class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 px-8 py-4 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                >
+                    Search
+                </button>
+            </div>
+        </div>
+
+        <div class="weather-cards-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <!-- Card 1: Main Weather Info -->
+            <div id="main-weather-card" class="weather-card backdrop-blur-md bg-gradient-to-br from-blue-500/30 to-purple-600/30 rounded-3xl p-8 shadow-2xl border border-white/20 transform transition-all duration-300 hover:scale-105">
+                <div class="card-header mb-6">
+                    <h3 class="text-sm font-medium text-white/70 uppercase tracking-wider mb-2">Location</h3>
+                    <h1 id="city-name" class="text-3xl font-bold mb-1">--</h1>
+                    <!-- <img id="condition-icon" src="" alt=""> -->
+                </div>
+                <div class="card-body">
+                    <div class="temperature-section mb-6">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-white/70 mb-1">Temperature</p>
+                                <p id="temp-c" class="text-6xl font-bold">--°</p>
+                            </div>
+                            <div class="text-right">
+                                <p id="condition" class="text-lg font-medium">--</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="additional-info grid grid-cols-2 gap-4">
+                        <div class="info-item">
+                            <p class="text-sm text-white/70">Feels Like</p>
+                            <p id="feels-like" class="text-xl font-semibold">--°</p>
+                        </div>
+                        <div class="info-item">
+                            <p class="text-sm text-white/70">Humidity</p>
+                            <p id="humidity" class="text-xl font-semibold">--%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Wind & Pressure -->
+            <div class="weather-card backdrop-blur-md bg-gradient-to-br from-cyan-500/30 to-blue-600/30 rounded-3xl p-8 shadow-2xl border border-white/20 transform transition-all duration-300 hover:scale-105">
+                <div class="card-header mb-6">
+                    <h3 class="text-sm font-medium text-white/70 uppercase tracking-wider mb-2">Wind & Atmosphere</h3>
+                </div>
+                <div class="card-body space-y-6">
+                    <div class="info-block">
+                        <div class="flex items-center justify-between mb-2">
+                            <p class="text-sm text-white/70">Wind Speed</p>
+                            <p id="wind-kph" class="text-2xl font-bold">-- km/h</p>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm text-white/70">Direction</p>
+                            <p id="wind-dir" class="text-lg font-medium">--</p>
+                        </div>
+                    </div>
+                    <div class="divider h-px bg-white/20"></div>
+                    <div class="info-block">
+                        <div class="flex items-center justify-between mb-2">
+                            <p class="text-sm text-white/70">Pressure</p>
+                            <p id="pressure" class="text-2xl font-bold">-- mb</p>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm text-white/70">Precipitation</p>
+                            <p id="precip" class="text-lg font-medium">-- mm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Visibility & UV -->
+            <div class="weather-card backdrop-blur-md bg-gradient-to-br from-purple-500/30 to-pink-600/30 rounded-3xl p-8 shadow-2xl border border-white/20 transform transition-all duration-300 hover:scale-105">
+                <div class="card-header mb-6">
+                    <h3 class="text-sm font-medium text-white/70 uppercase tracking-wider mb-2">Air Quality & Visibility</h3>
+                </div>
+                <div class="card-body space-y-6">
+                    <div class="info-block">
+                        <div class="flex items-center justify-between mb-2">
+                            <p class="text-sm text-white/70">Visibility</p>
+                            <p id="visibility" class="text-2xl font-bold">-- km</p>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm text-white/70">UV Index</p>
+                            <p id="uv" class="text-lg font-medium">--</p>
+                        </div>
+                    </div>
+                    <div class="divider h-px bg-white/20"></div>
+                    <div class="info-block">
+                        <div class="flex items-center justify-between mb-2">
+                            <p class="text-sm text-white/70">Cloud Cover</p>
+                            <p id="cloud" class="text-2xl font-bold">--%</p>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm text-white/70">Dew Point</p>
+                            <p id="dewpoint" class="text-lg font-medium">--°</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-[80rem] mx-auto h-auto py-8">
+            <p class="text-2xl text-white/90">Local Time:</p>
+            <p id="local-time" class="text-2xl text-white/90">--</p>
+            <p id="last-updated" class="text-sm text-white/80 pt-8">Last updated: --</p>
+        </div>
+    </main>
+
+    <footer class="flex px-8 py-8 justify-center bg-gradient-to-r from-slate-900 to-slate-800 fixed w-full bottom-0">
+        <p>Made with love by SK ❤️</p>
+    </footer>
+
+    <script src="./script.js"></script>
 </body>
 </html>
